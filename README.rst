@@ -46,7 +46,7 @@ Clone the project using SSH
 
  git clone git@github.com:lordmikefin/LMAutoSetBotBSD.git
  
- cd LMAutoSetBotUbM/
+ cd LMAutoSetBotBSD/
  git submodule init
  git submodule update
 
