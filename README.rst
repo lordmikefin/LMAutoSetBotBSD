@@ -49,5 +49,12 @@ Clone the project using SSH
  cd LMAutoSetBotBSD/
  git submodule init
  git submodule update
+ 
+ # Set ssh urls for submodules
+ cd submodule/LMToysBash
+ 
+ git checkout master
+ git remote -v
+ git remote set-url origin git@github.com:lordmikefin/LMToysBash.git
 
 
