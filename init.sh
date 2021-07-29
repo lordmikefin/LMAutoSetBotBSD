@@ -18,7 +18,7 @@
 
 
 unset CURRENT_SCRIPT_VER CURRENT_SCRIPT_DATE
-CURRENT_SCRIPT_VER="0.0.2"
+CURRENT_SCRIPT_VER="0.0.3"
 CURRENT_SCRIPT_DATE="2021-07-29"
 echo "CURRENT_SCRIPT_VER: ${CURRENT_SCRIPT_VER} (${CURRENT_SCRIPT_DATE})"
 
@@ -64,6 +64,28 @@ else
 fi
 
 
+echo ""
+APP_PY="python3"
+PY_VERSION=$(lm_get_app_version ${APP_PY})  || lm_failure
+#echo ${PY_VERSION}
+if [ -z "${PY_VERSION}" ] ; then
+	echo "'${APP_PY}' is not installed !"
+else
+	echo "'${APP_PY}' is installed."
+fi
+
+
+echo ""
+APP_PIP="pip"
+PIP_VERSION=$(lm_get_app_version ${APP_PIP})  || lm_failure
+#echo "PIP_VERSION ${PIP_VERSION}"
+if [ -z "${PIP_VERSION}" ] ; then
+	echo "'${APP_PIP}' is not installed !"
+else
+	echo "'${APP_PIP}' is installed."
+fi
+
+
 lm_incomplete_message () {
 	>&2 echo ""
 	>&2 echo "All applications suggested by this script should be installed"
@@ -92,6 +114,44 @@ if [ -z "${GIT_VERSION}" ] ; then
 	esac
 fi
 
+# install python 3
+if [ -z "${PY_VERSION}" ] ; then
+	#echo "'${APP_PY}' is not installed !"
+	unset INPUT
+	lm_read_to_INPUT "Do you want to install the 'python3'?"
+	case "${INPUT}" in
+		"YES" )
+			sudo pkg install python3
+			;;
+		"NO" )
+			echo "Ok then. Bye."
+			lm_incomplete_message
+			exit 1
+			;;
+		"FAILED" | * )
+			lm_failure_message
+			;;
+	esac
+fi
+
+# install pip
+if [ -z "${PIP_VERSION}" ] ; then
+	unset INPUT
+	lm_read_to_INPUT "Do you want to install the 'py37-pip'?"
+	case "${INPUT}" in
+		"YES" )
+			sudo pkg install py37-pip
+			;;
+		"NO" )
+			echo "Ok then. Bye."
+			lm_incomplete_message
+			exit 1
+			;;
+		"FAILED" | * )
+			lm_failure_message
+			;;
+	esac
+fi
 
 
 echo "End of script '${CURRENT_SCRIPT}'"
