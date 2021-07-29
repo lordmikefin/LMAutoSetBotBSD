@@ -18,8 +18,8 @@
 
 
 unset CURRENT_SCRIPT_VER CURRENT_SCRIPT_DATE
-CURRENT_SCRIPT_VER="0.0.1"
-CURRENT_SCRIPT_DATE="2021-07-28"
+CURRENT_SCRIPT_VER="0.0.2"
+CURRENT_SCRIPT_DATE="2021-07-29"
 echo "CURRENT_SCRIPT_VER: ${CURRENT_SCRIPT_VER} (${CURRENT_SCRIPT_DATE})"
 
 
@@ -46,6 +46,50 @@ elif [ ${LM_FUNCTIONS_VER} != "1.3.6" ]; then
 	if [ "${INPUT}" == "FAILED" ]; then
 		lm_failure
 	fi
+fi
+
+
+
+# TODO: Should I check version of these apps?  *sigh*
+
+echo ""
+APP_GIT="git"
+GIT_VERSION=$(lm_get_git_version)  || lm_failure
+#GIT_VERSION=$(lm_get_app_version ${APP_GIT})  || lm_failure
+#echo ${GIT_VERSION}
+if [ -z "${GIT_VERSION}" ] ; then
+	echo "'${APP_GIT}' is not installed !"
+else
+	echo "'${APP_GIT}' is installed."
+fi
+
+
+lm_incomplete_message () {
+	>&2 echo ""
+	>&2 echo "All applications suggested by this script should be installed"
+    >&2 echo "before you continue to real script (Python)."
+	>&2 echo ""
+}
+
+
+# install git
+if [ -z "${GIT_VERSION}" ] ; then
+	#echo "'${APP_GIT}' is not installed !"
+	unset INPUT
+	lm_read_to_INPUT "Do you want to install the 'git'?"
+	case "${INPUT}" in
+		"YES" )
+			sudo pkg install git
+			;;
+		"NO" )
+			echo "Ok then. Bye."
+			lm_incomplete_message
+			exit 1
+			;;
+		"FAILED" | * )
+			lm_failure_message
+			;;
+	esac
 fi
 
 
