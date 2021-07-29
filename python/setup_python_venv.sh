@@ -18,7 +18,7 @@
 
 
 unset CURRENT_SCRIPT_VER CURRENT_SCRIPT_DATE
-CURRENT_SCRIPT_VER="0.0.3"
+CURRENT_SCRIPT_VER="0.0.4"
 CURRENT_SCRIPT_DATE="2021-07-29"
 echo "CURRENT_SCRIPT_VER: ${CURRENT_SCRIPT_VER} (${CURRENT_SCRIPT_DATE})"
 
@@ -153,9 +153,6 @@ echo "Current virtual environment:"
 echo "  ${VIRTUAL_ENV}"
 echo ""
 
-
-echo -e "\n This script is in test mode :)  Aborting." >&2
-exit 1
 
 # Make sure we are using the lates pip version.
 echo ""

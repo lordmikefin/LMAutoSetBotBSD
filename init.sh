@@ -18,7 +18,7 @@
 
 
 unset CURRENT_SCRIPT_VER CURRENT_SCRIPT_DATE
-CURRENT_SCRIPT_VER="0.0.4"
+CURRENT_SCRIPT_VER="0.0.5"
 CURRENT_SCRIPT_DATE="2021-07-29"
 echo "CURRENT_SCRIPT_VER: ${CURRENT_SCRIPT_VER} (${CURRENT_SCRIPT_DATE})"
 
@@ -185,6 +185,13 @@ if [ -z "${JAVA_VERSION}" ] ; then
 			;;
 	esac
 fi
+
+
+cd python
+
+# Create Python virtual environment 'venv-LMAutoSetBotBSD'
+echo "Run script  ./setup_python_venv.sh"
+./setup_python_venv.sh
 
 
 echo "End of script '${CURRENT_SCRIPT}'"
