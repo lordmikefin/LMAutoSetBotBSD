@@ -18,7 +18,7 @@
 
 
 unset CURRENT_SCRIPT_VER CURRENT_SCRIPT_DATE
-CURRENT_SCRIPT_VER="0.0.2"
+CURRENT_SCRIPT_VER="0.0.3"
 CURRENT_SCRIPT_DATE="2021-07-29"
 echo "CURRENT_SCRIPT_VER: ${CURRENT_SCRIPT_VER} (${CURRENT_SCRIPT_DATE})"
 
@@ -82,7 +82,8 @@ fi
 echo ""
 echo "Make sure we are using the lates pip version."
 echo " $ ${APP_PIP} install --upgrade pip"
-sudo ${APP_PIP} install --upgrade pip
+#sudo ${APP_PIP} install --upgrade pip
+${APP_PIP} install --upgrade pip
 
 
 # Installing root environment (Python) modules.
@@ -90,7 +91,8 @@ echo ""
 echo "Installing root environment (Python) modules."
 echo ""
 echo " $ ${APP_PIP} install -U -r root_environment_requirements_bsd.txt"
-sudo ${APP_PIP} install -U -r root_environment_requirements_bsd.txt  || lm_failure
+#sudo ${APP_PIP} install -U -r root_environment_requirements_bsd.txt  || lm_failure
+${APP_PIP} install -U -r root_environment_requirements_bsd.txt  || lm_failure
 
 
 # List of 'Root' environment modules
@@ -104,26 +106,24 @@ ${APP_PIP} list  || lm_failure
 
 
 
-echo -e "\n This script is in test mode :)  Aborting." >&2
-exit 1
-
 # Create the venv
 VENV="venv-LMAutoSetBotBSD"
 VENV_PATH="${HOME}/Envs"
 func_create_venv () {
 	echo "I will create a new virtual environment '${VENV}'"
-	echo " $ virtualenv -p /usr/bin/python3 ${VENV_PATH}/${VENV}"
+	echo " $ virtualenv -p /usr/local/bin/python3 ${VENV_PATH}/${VENV}"
 	echo ""
-	# NOTE: virtualenv is not in path (Ubuntu-Mate 20)
+	# NOTE: virtualenv is not in path (BSD)
 	#  WARNING: The script virtualenv is installed in '/home/lordmike/.local/bin' which is not on PATH.
     #  Consider adding this directory to PATH
     # TODO: add folder into PATH
+    # NOTE: Maybe ubuntu guide works for BSD. Environment looks very similar.
     # https://askubuntu.com/questions/60218/how-to-add-a-directory-to-the-path
     # https://help.ubuntu.com/community/EnvironmentVariables
     # $ nano ~/.profile
     # $ export PATH="$HOME/.local/bin:$PATH"
     export PATH="$HOME/.local/bin:$PATH"
-	virtualenv -p /usr/bin/python3 ${VENV_PATH}/${VENV}  || lm_failure
+	virtualenv -p /usr/local/bin/python3 ${VENV_PATH}/${VENV}  || lm_failure
 }
 
 # I will try to use virtual environment 'venv-LMAutoSetBotUbM'.
@@ -153,6 +153,9 @@ echo "Current virtual environment:"
 echo "  ${VIRTUAL_ENV}"
 echo ""
 
+
+echo -e "\n This script is in test mode :)  Aborting." >&2
+exit 1
 
 # Make sure we are using the lates pip version.
 echo ""
